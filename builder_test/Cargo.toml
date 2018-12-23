@@ -1,0 +1,9 @@
+[package]
+name = "builder_test"
+version = "0.1.0"
+authors = ["Daniel Akhterov <akhterovd@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+builder = { path = "../builder" }
+builder_derive = { path = "../builder_derive" }
