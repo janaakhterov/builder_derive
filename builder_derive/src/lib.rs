@@ -28,9 +28,9 @@ fn impl_builder_struct(data: &DataStruct) -> proc_macro2::TokenStream {
                     let ident = ident.clone().unwrap();
 
                     let ty = &field.ty;
-                    return quote!{ 
+                    quote!{ 
                         #ident: Option<#ty>
-                    };
+                    }
                 }).collect::<Vec<proc_macro2::TokenStream>>()
         },
         _ => unimplemented!(),
