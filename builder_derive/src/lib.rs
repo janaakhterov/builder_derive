@@ -18,7 +18,10 @@ use std::result::Result;
 pub fn builder_derive(ast: TokenStream) -> TokenStream {
     let ast = parse(ast).unwrap();
 
-    impl_builder(&ast)
+    match &ast.data {
+        Data::Struct(data) => impl_builder_struct(data, &ast.ident).into(),
+        _ => unimplemented!(),
+    }
 }
 
 fn unzip(vec: Vec<(TS, TS, TS, TS)>) -> (Vec<TS>, Vec<TS>, Vec<TS>, Vec<TS>) {
@@ -94,12 +97,4 @@ fn impl_builder_struct(data: &DataStruct, derived_struct: &Ident) -> TS {
     };
 
     gen
-}
-
-fn impl_builder(ast: &DeriveInput) -> TokenStream {
-
-    match &ast.data {
-        Data::Struct(data) => impl_builder_struct(data, &ast.ident).into(),
-        _ => unimplemented!(),
-    }
 }
