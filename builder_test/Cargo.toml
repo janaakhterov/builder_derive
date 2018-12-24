@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 builder = { path = "../builder" }
 builder_derive = { path = "../builder_derive" }
+failure = "0.1.3"
