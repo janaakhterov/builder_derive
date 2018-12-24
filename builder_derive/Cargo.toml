@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 quote = "0.6.10"
-syn = { version = "0.15.23", feature = ["derive"] }
+syn = "0.15.23"
 failure = "0.1.3"
 proc-macro2 = "0.4.24"
 paste = "0.1.3"

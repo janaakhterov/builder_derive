@@ -7,8 +7,6 @@ use syn::DataStruct;
 use syn::DeriveInput;
 use syn::parse;
 use syn::Fields;
-use syn::FieldsNamed;
-use syn::Field;
 use proc_macro2::Ident;
 use proc_macro2::Span;
 
@@ -20,7 +18,7 @@ pub fn builder_derive(ast: TokenStream) -> TokenStream {
 }
 
 fn impl_builder_struct(data: &DataStruct) -> proc_macro2::TokenStream {
-    let fields = match &data.fields {
+    let _fields = match &data.fields {
         Fields::Named(fields) => {
             fields.named.iter()
                 .map(|field| {
@@ -30,18 +28,17 @@ fn impl_builder_struct(data: &DataStruct) -> proc_macro2::TokenStream {
                     let ident = ident.clone().unwrap();
 
                     let ty = &field.ty;
-                    let gen = quote!{ #ident: Option<#ty>, };
-                    return gen.into();
-                }).collect::<Vec<TokenStream>>()
+                    return quote!{ 
+                        #ident: Option<#ty>
+                    };
+                }).collect::<Vec<proc_macro2::TokenStream>>()
         },
         _ => unimplemented!(),
     };
 
-    let gen = quote!{
-        #(fields),*
-    };
-    
-    gen
+    quote!{
+        #(#_fields),*
+    }
 }
 
 fn impl_builder(ast: &DeriveInput) -> TokenStream {
@@ -55,7 +52,7 @@ fn impl_builder(ast: &DeriveInput) -> TokenStream {
     let name = Ident::new(&name, Span::call_site());
 
     let gen = quote! {
-        #[derive(Default)]
+        #[derive(Default, Debug)]
         pub struct #name {
             #body
         }
