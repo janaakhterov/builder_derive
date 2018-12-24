@@ -22,22 +22,26 @@ pub fn builder_derive(ast: TokenStream) -> TokenStream {
 }
 
 fn unzip(vec: Vec<(TS, TS, TS, TS)>) -> (Vec<TS>, Vec<TS>, Vec<TS>, Vec<TS>) {
-    let first: Vec<&TS> = Vec::new();
-    let second: Vec<&TS> = Vec::new();
-    let third: Vec<&TS> = Vec::new();
-    let forth: Vec<&TS> = Vec::new();
+    let mut first: Vec<TS> = Vec::new();
+    let mut second: Vec<TS> = Vec::new();
+    let mut third: Vec<TS> = Vec::new();
+    let mut forth: Vec<TS> = Vec::new();
 
-    vec.iter().map(|(a, b, c , d)| {
+
+    for (a, b ,c ,d) in vec {
         first.push(a);
         second.push(b);
         third.push(c);
         forth.push(d);
-    });
+    }
 
     (first, second, third, forth)
 }
 
-fn impl_builder_struct(data: &DataStruct, name: &Ident) -> TS {
+fn impl_builder_struct(data: &DataStruct, derived_struct: &Ident) -> TS {
+    let name = format!("{}Builder", derived_struct);
+    let name = Ident::new(&name, derived_struct.span());
+
     let (_fields, 
          _setters, 
          _check_options, 
@@ -79,10 +83,10 @@ fn impl_builder_struct(data: &DataStruct, name: &Ident) -> TS {
         impl #name {
             #(#_setters)*
 
-            fn build(&self) -> Result<#name, Error> {
+            fn build(self) -> Result<#derived_struct, Error> {
                 #(#_check_options)*
 
-                Ok(#name {
+                Ok(#derived_struct {
                     #(#_idents_for_struct),*
                 })
             }
@@ -93,8 +97,6 @@ fn impl_builder_struct(data: &DataStruct, name: &Ident) -> TS {
 }
 
 fn impl_builder(ast: &DeriveInput) -> TokenStream {
-    let name = format!("{}Builder", &ast.ident);
-    let name = Ident::new(&name, Span::call_site());
 
     match &ast.data {
         Data::Struct(data) => impl_builder_struct(data, &ast.ident).into(),
