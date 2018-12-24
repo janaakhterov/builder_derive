@@ -1,3 +1,1 @@
-pub trait Builder {
-    fn builder() -> Self;
-}
+pub trait Builder {}
