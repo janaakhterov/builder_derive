@@ -9,6 +9,7 @@ struct Test {
 
 fn main() {
     println!("Hello, world!");
-    TestBuilder::build();
+    let mut builder = TestBuilder::default();
+    builder.y(10);
     println!("{:?}", TestBuilder::default());
 }
