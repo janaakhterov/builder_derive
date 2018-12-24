@@ -7,5 +7,5 @@ struct Test {
 
 fn main() {
     println!("Hello, world!");
-    Test::build();
+    TestBuilder::build();
 }
