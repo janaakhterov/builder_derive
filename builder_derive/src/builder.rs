@@ -49,7 +49,7 @@ pub(crate) fn impl_builder_struct(data: &DataStruct, derived_struct: &Ident) -> 
         _ => unimplemented!(),
     };
 
-    let gen = quote! {
+    quote! {
         #[derive(Default, Debug)]
         pub struct #name {
             #(#_fields),*
@@ -66,7 +66,5 @@ pub(crate) fn impl_builder_struct(data: &DataStruct, derived_struct: &Ident) -> 
                 })
             }
         }
-    };
-
-    gen
+    }
 }
