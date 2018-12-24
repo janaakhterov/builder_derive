@@ -6,7 +6,7 @@ pub(crate) fn unzip(vec: Vec<(TS, TS, TS, TS)>) -> (Vec<TS>, Vec<TS>, Vec<TS>, V
     let mut third: Vec<TS> = Vec::new();
     let mut forth: Vec<TS> = Vec::new();
 
-    for (a, b ,c ,d) in vec {
+    for (a, b, c, d) in vec {
         first.push(a);
         second.push(b);
         third.push(c);

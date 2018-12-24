@@ -5,6 +5,6 @@ authors = ["Daniel Akhterov <akhterovd@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-builder = { path = "../builder" }
-builder_derive = { path = "../builder_derive" }
+builder = { path = "builder" }
+builder_derive = { path = "builder_derive" }
 failure = "0.1.3"
