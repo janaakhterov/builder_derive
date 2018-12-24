@@ -1,2 +1,7 @@
 /target
 **/*.rs.bk
+Cargo.lock
+
+# Vim
+*.swp
+*.vim
